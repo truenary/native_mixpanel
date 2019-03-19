@@ -4,6 +4,10 @@ import 'package:native_mixpanel/native_mixpanel.dart';
 
 void main() {
   const MethodChannel channel = MethodChannel('native_mixpanel');
+  Mixpanel mixpanel = Mixpanel(
+    isDebug: true,
+    isOptedOut: true,
+  );
 
   setUp(() {
     channel.setMockMethodCallHandler((MethodCall methodCall) async {
@@ -16,6 +20,6 @@ void main() {
   });
 
   test('getPlatformVersion', () async {
-    expect(await NativeMixpanel.platformVersion, '42');
+    expect(await mixpanel.initialize('dummytoken'), null);
   });
 }
