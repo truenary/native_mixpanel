@@ -1,8 +1,8 @@
 name: native_mixpanel
-description: A new flutter plugin project.
+description: Plugin for Mixpanel
 version: 0.0.1
-author:
-homepage:
+author: Suren Yonjan <surendrayonjan@gmail.com>
+homepage: https://github.com/truenary/native_mixpanel
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
