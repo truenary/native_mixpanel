@@ -1,6 +1,8 @@
 import Flutter
 import UIKit
 
+import Mixpanel
+
 public class SwiftNativeMixpanelPlugin: NSObject, FlutterPlugin {
   public static func register(with registrar: FlutterPluginRegistrar) {
     let channel = FlutterMethodChannel(name: "native_mixpanel", binaryMessenger: registrar.messenger())
@@ -9,6 +11,11 @@ public class SwiftNativeMixpanelPlugin: NSObject, FlutterPlugin {
   }
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-    result("iOS " + UIDevice.current.systemVersion)
+    if (call.method == "initialize") {
+      Mixpanel.initialize(token: call.arguments as! String)
+    } else {
+      Mixpanel.mainInstance().track(event: call.method)
+    }
+    result("success")
   }
 }
