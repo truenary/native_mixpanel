@@ -25,10 +25,7 @@ class NativeMixpanelPlugin: MethodCallHandler {
   }
 
   override fun onMethodCall(call: MethodCall, result: Result) {
-    if (call.method == "getPlatformVersion") {
-      result.success("Android ${android.os.Build.VERSION.RELEASE}")
-    }
-    else if (call.method == "initialize") {
+    if (call.method == "initialize") {
       mixpanel = MixpanelAPI.getInstance(ctxt, call.arguments.toString())
       result.success("Init success..")
     }
