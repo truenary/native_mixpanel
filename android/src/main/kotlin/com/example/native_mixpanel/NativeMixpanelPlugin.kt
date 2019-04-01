@@ -2,6 +2,7 @@ package com.example.native_mixpanel
 
 import android.content.Context
 import android.util.Log
+import org.json.JSONObject
 import com.mixpanel.android.mpmetrics.MixpanelAPI
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
@@ -30,7 +31,14 @@ class NativeMixpanelPlugin: MethodCallHandler {
       result.success("Init success..")
     }
     else {
-      mixpanel?.track(call.method)
+      if(call.arguments == null)
+      {
+        mixpanel?.track(call.method)  
+      }
+      else {
+        val json = JSONObject(call.arguments.toString())
+        mixpanel?.track(call.method, json)
+      }      
       result.success("Track success..")
     }
   }
