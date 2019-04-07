@@ -4,6 +4,7 @@ import UIKit
 import Mixpanel
 
 public class SwiftNativeMixpanelPlugin: NSObject, FlutterPlugin {
+  
   public static func register(with registrar: FlutterPluginRegistrar) {
     let channel = FlutterMethodChannel(name: "native_mixpanel", binaryMessenger: registrar.messenger())
     let instance = SwiftNativeMixpanelPlugin()
@@ -11,11 +12,22 @@ public class SwiftNativeMixpanelPlugin: NSObject, FlutterPlugin {
   }
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-    if (call.method == "initialize") {
-      Mixpanel.initialize(token: call.arguments as! String)
-    } else {
-      Mixpanel.mainInstance().track(event: call.method)
+    do {
+      
+      if (call.method == "initialize") {
+        Mixpanel.initialize(token: call.arguments as! String)
+      } else if let arguments = call.arguments, let data = (arguments as! String).data(using: .utf8) {
+
+        let properties = try JSONSerialization.jsonObject(with: data, options: []) as? Properties
+        Mixpanel.mainInstance().track(event: call.method, properties: properties)
+      } else {
+        Mixpanel.mainInstance().track(event: call.method)
+      }
+
+      result(true)
+    } catch {
+      print(error.localizedDescription)
+      result(false)
     }
-    result("success")
   }
 }
