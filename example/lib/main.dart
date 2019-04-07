@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:native_mixpanel/native_mixpanel.dart';
@@ -24,11 +25,13 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _statusMessage = 'Trying to send track event';
+  int count;
 
   @override
   void initState() {
     super.initState();
     initPlatformState();
+    count = 0;
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
@@ -38,7 +41,7 @@ class _MyAppState extends State<MyApp> {
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       await widget.mixpanel.initialize('<your-token-here>');
-      await widget.mixpanel.track(eventName);
+      await widget.mixpanel.track(eventName, jsonEncode({'Math': 'divide'}));
       initStatus = 'Event Sent: $eventName';
     } on PlatformException {
       initStatus = 'Failed to send event: $eventName';
@@ -63,6 +66,12 @@ class _MyAppState extends State<MyApp> {
         ),
         body: Center(
           child: Text('$_statusMessage\n'),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            widget.mixpanel.track('Added to Cart', jsonEncode({'ProductId': 'product-${count++}'}));
+          },
+          child: Icon(Icons.plus_one),
         ),
       ),
     );
