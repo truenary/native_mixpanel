@@ -11,3 +11,8 @@
 ## 0.0.4
 
 - Add suppor for props in iOS platform
+
+# 0.0.5
+- Fix: props not received in iOS platform.
+
+Force converted arguments to [String:String] type for time being
