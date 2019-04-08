@@ -11,14 +11,14 @@ public class SwiftNativeMixpanelPlugin: NSObject, FlutterPlugin {
     registrar.addMethodCallDelegate(instance, channel: channel)
   }
 
-  public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+  public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult)  {
     do {
       
       if (call.method == "initialize") {
         Mixpanel.initialize(token: call.arguments as! String)
       } else if let arguments = call.arguments, let data = (arguments as! String).data(using: .utf8) {
 
-        let properties = try JSONSerialization.jsonObject(with: data, options: []) as? Properties
+        let properties = try JSONSerialization.jsonObject(with: data, options: []) as! [String:String]
         Mixpanel.mainInstance().track(event: call.method, properties: properties)
       } else {
         Mixpanel.mainInstance().track(event: call.method)
