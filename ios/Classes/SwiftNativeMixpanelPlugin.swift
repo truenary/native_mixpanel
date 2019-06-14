@@ -3,7 +3,7 @@ import UIKit
 
 import Mixpanel
 
-public class SwiftNativeMixpanelPlugin: NSObject, FlutterPlugin {
+@objc public class SwiftNativeMixpanelPlugin: NSObject, FlutterPlugin {
   
   public static func register(with registrar: FlutterPluginRegistrar) {
     let channel = FlutterMethodChannel(name: "native_mixpanel", binaryMessenger: registrar.messenger())
