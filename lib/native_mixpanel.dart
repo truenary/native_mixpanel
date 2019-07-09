@@ -62,6 +62,14 @@ class Mixpanel extends _Mixpanel {
     return this._mp.track('initialize', token);
   }
 
+  Future identify(String distinctId) {
+    return this._mp.track('identify', distinctId);
+  }
+
+  Future alias(String alias) {
+    return this._mp.track('alias', alias);
+  }
+
   Future track(String eventName, [dynamic props]) {
     return this._mp.track(eventName, props);
   }

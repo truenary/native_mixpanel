@@ -29,13 +29,19 @@ class NativeMixpanelPlugin: MethodCallHandler {
     if (call.method == "initialize") {
       mixpanel = MixpanelAPI.getInstance(ctxt, call.arguments.toString())
       result.success("Init success..")
-    }
-    else {
-      if(call.arguments == null)
-      {
+
+    } else if(call.method == "identify") {
+      mixpanel?.identify(call.arguments.toString())
+      result.success("Identify success..")
+
+    } else if(call.method == "alias") {
+      mixpanel?.alias(call.arguments.toString(), mixpanel?.getDistinctId())
+      result.success("Alias success..")
+
+    } else {
+      if(call.arguments == null) {
         mixpanel?.track(call.method)  
-      }
-      else {
+      } else {
         val json = JSONObject(call.arguments.toString())
         mixpanel?.track(call.method, json)
       }      
