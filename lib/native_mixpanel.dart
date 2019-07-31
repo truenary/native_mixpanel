@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart' show debugPrint;
@@ -70,7 +71,19 @@ class Mixpanel extends _Mixpanel {
     return this._mp.track('alias', alias);
   }
 
+  Future setPeopleProperties(Map<String, dynamic> props) {
+    return this._mp.track('setPeopleProperties', jsonEncode(props));
+  }
+
+  Future registerSuperProperties(Map<String, dynamic> props) {
+    return this._mp.track('registerSuperProperties', jsonEncode(props));
+  }
+
+  Future reset() {
+    return this._mp.track('reset');
+  }
+
   Future track(String eventName, [dynamic props]) {
-    return this._mp.track(eventName, props);
+    return this._mp.track(eventName, jsonEncode(props));
   }
 }
