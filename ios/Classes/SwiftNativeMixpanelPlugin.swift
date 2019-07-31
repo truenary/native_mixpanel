@@ -35,7 +35,21 @@ import Mixpanel
         Mixpanel.mainInstance().identify(distinctId: call.arguments as! String)
       } else if(call.method == "alias") {
         Mixpanel.mainInstance().createAlias(call.arguments as! String, distinctId: Mixpanel.mainInstance().distinctId)
-      } else if let argProperties = try self.getPropertiesFromArguments(callArguments: call.arguments) {
+      } else if(call.method == "setPeopleProperties") {
+        if let argProperties = try self.getPropertiesFromArguments(callArguments: call.arguments) {
+          Mixpanel.mainInstance().people.set(properties: argProperties)
+        } else {
+          result(FlutterError(code: "Parse Error", message: "Could not parse arguments for setPeopleProperties platform call. Needs valid JSON data.", details: nil))
+        }
+      } else if(call.method == "registerSuperProperties") {
+        if let argProperties = try self.getPropertiesFromArguments(callArguments: call.arguments) {
+          Mixpanel.mainInstance().registerSuperProperties(argProperties)
+        } else {
+          result(FlutterError(code: "Parse Error", message: "Could not parse arguments for registerSuperProperties platform call. Needs valid JSON data.", details: nil))
+        }
+      } else if(call.method == "reset") {
+        Mixpanel.mainInstance().reset()
+      } else if let argProperties = self.getPropertiesFromArguments(callArguments: call.arguments) {
         Mixpanel.mainInstance().track(event: call.method, properties: argProperties)
       } else {
         Mixpanel.mainInstance().track(event: call.method)
