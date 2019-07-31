@@ -7,7 +7,7 @@ import 'package:native_mixpanel/native_mixpanel.dart';
 
 void main() => runApp(MyApp(
   mixpanel: Mixpanel(
-    isDebug: true,
+    shouldLogEvents: true,
     isOptedOut: false,
   ),
 ));

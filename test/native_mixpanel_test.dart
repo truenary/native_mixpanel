@@ -5,7 +5,7 @@ import 'package:native_mixpanel/native_mixpanel.dart';
 void main() {
   const MethodChannel channel = MethodChannel('native_mixpanel');
   Mixpanel mixpanel = Mixpanel(
-    isDebug: true,
+    shouldLogEvents: true,
     isOptedOut: true,
   );
 

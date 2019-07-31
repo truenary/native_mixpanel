@@ -43,19 +43,19 @@ class _MixpanelDebugged extends _Mixpanel {
 
 class Mixpanel extends _Mixpanel {
 
-  final bool isDebug;
+  final bool shouldLogEvents;
   final bool isOptedOut;
 
   _Mixpanel _mp;
 
   Mixpanel({
-    this.isDebug,
+    this.shouldLogEvents,
     this.isOptedOut,
   }) {
 
     _Mixpanel _mixpanel = isOptedOut ? _MixpanelOptedOut() : _MixpanelOptedIn();
 
-    if (isDebug) _mp = _MixpanelDebugged(child: _mixpanel);
+    if (shouldLogEvents) _mp = _MixpanelDebugged(child: _mixpanel);
     else _mp = _mixpanel;
   }
 
