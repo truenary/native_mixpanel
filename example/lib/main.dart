@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:native_mixpanel/native_mixpanel.dart';
@@ -40,7 +39,7 @@ class _MyAppState extends State<MyApp> {
     String eventName = 'First App Open';
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
-      await widget.mixpanel.initialize('<your-token-here>');
+      await widget.mixpanel.initialize('2500d0d99b3d441c731588f2ef57ef36');
       await widget.mixpanel.track(eventName, {'Math': 'divide'});
       initStatus = 'Event Sent: $eventName';
     } on PlatformException {
@@ -115,9 +114,27 @@ class _MyAppState extends State<MyApp> {
               alignment: Alignment.center,
               child: RaisedButton(
                 onPressed: () async {
+                  await widget.mixpanel.track('TICK', {'createdAt': DateTime.now().toIso8601String()});
+                },
+                child: Text('Send Tick Event'),
+              ),
+            ),
+            Container(
+              alignment: Alignment.center,
+              child: RaisedButton(
+                onPressed: () async {
                   await widget.mixpanel.reset();
                 },
                 child: Icon(Icons.restore),
+              ),
+            ),
+            Container(
+              alignment: Alignment.center,
+              child: RaisedButton(
+                onPressed: () async {
+                  await widget.mixpanel.flush();
+                },
+                child: Text('Flush'),
               ),
             ),
           ],
