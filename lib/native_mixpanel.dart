@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart' show debugPrint;
@@ -42,19 +43,19 @@ class _MixpanelDebugged extends _Mixpanel {
 
 class Mixpanel extends _Mixpanel {
 
-  final bool isDebug;
+  final bool shouldLogEvents;
   final bool isOptedOut;
 
   _Mixpanel _mp;
 
   Mixpanel({
-    this.isDebug,
+    this.shouldLogEvents,
     this.isOptedOut,
   }) {
 
     _Mixpanel _mixpanel = isOptedOut ? _MixpanelOptedOut() : _MixpanelOptedIn();
 
-    if (isDebug) _mp = _MixpanelDebugged(child: _mixpanel);
+    if (shouldLogEvents) _mp = _MixpanelDebugged(child: _mixpanel);
     else _mp = _mixpanel;
   }
 
@@ -62,7 +63,31 @@ class Mixpanel extends _Mixpanel {
     return this._mp.track('initialize', token);
   }
 
+  Future identify(String distinctId) {
+    return this._mp.track('identify', distinctId);
+  }
+
+  Future alias(String alias) {
+    return this._mp.track('alias', alias);
+  }
+
+  Future setPeopleProperties(Map<String, dynamic> props) {
+    return this._mp.track('setPeopleProperties', jsonEncode(props));
+  }
+
+  Future registerSuperProperties(Map<String, dynamic> props) {
+    return this._mp.track('registerSuperProperties', jsonEncode(props));
+  }
+
+  Future reset() {
+    return this._mp.track('reset');
+  }
+
+  Future flush() {
+    return this._mp.track('flush');
+  }
+
   Future track(String eventName, [dynamic props]) {
-    return this._mp.track(eventName, props);
+    return this._mp.track(eventName, jsonEncode(props));
   }
 }

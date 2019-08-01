@@ -29,13 +29,41 @@ class NativeMixpanelPlugin: MethodCallHandler {
     if (call.method == "initialize") {
       mixpanel = MixpanelAPI.getInstance(ctxt, call.arguments.toString())
       result.success("Init success..")
-    }
-    else {
-      if(call.arguments == null)
-      {
-        mixpanel?.track(call.method)  
+
+    } else if(call.method == "identify") {
+      mixpanel?.identify(call.arguments.toString())
+      result.success("Identify success..")
+
+    } else if(call.method == "alias") {
+      mixpanel?.alias(call.arguments.toString(), mixpanel?.getDistinctId())
+      result.success("Alias success..")
+
+    } else if(call.method == "setPeopleProperties") {
+      if (call.arguments == null) {
+        result.error("Parse Error", "Arguments required for setPeopleProperties platform call", null)
+      } else {
+        val json = JSONObject(call.arguments.toString())
+        mixpanel?.people?.set(json)
+        result.success("Set People Properties success..")
       }
-      else {
+    } else if(call.method == "registerSuperProperties") {
+      if (call.arguments == null) {
+        result.error("Parse Error", "Arguments required for registerSuperProperties platform call", null)
+      } else {
+        val json = JSONObject(call.arguments.toString())
+        mixpanel?.registerSuperProperties(json)
+        result.success("Register Properties success..")
+      }
+    } else if (call.method == "reset") {
+      mixpanel?.reset()
+      result.success("Reset success..")
+    } else if (call.method == "flush") {
+      mixpanel?.flush()
+      result.success("Flush success..")
+    } else {
+      if(call.arguments == null) {
+        mixpanel?.track(call.method)  
+      } else {
         val json = JSONObject(call.arguments.toString())
         mixpanel?.track(call.method, json)
       }      
