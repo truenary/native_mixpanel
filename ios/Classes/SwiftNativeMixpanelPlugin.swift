@@ -49,6 +49,8 @@ import Mixpanel
         }
       } else if(call.method == "reset") {
         Mixpanel.mainInstance().reset()
+      } else if(call.method == "flush") {
+        Mixpanel.mainInstance().flush()
       } else if let argProperties = try self.getPropertiesFromArguments(callArguments: call.arguments) {
         Mixpanel.mainInstance().track(event: call.method, properties: argProperties)
       } else {
