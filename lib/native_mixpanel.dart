@@ -83,6 +83,10 @@ class Mixpanel extends _Mixpanel {
     return this._mp.track('reset');
   }
 
+  Future flush() {
+    return this._mp.track('flush');
+  }
+
   Future track(String eventName, [dynamic props]) {
     return this._mp.track(eventName, jsonEncode(props));
   }
