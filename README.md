@@ -1,14 +1,14 @@
 # native_mixpanel
 
-A new flutter plugin project.
+A new flutter plugin project to send Mixpanel events
 
-## Getting Started
+### iOS Specific
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.io/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
+If you wish to use our Swift 4.0 implementation, please point to the v0.0.7 release.
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.io/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+### Android Specific
+
+If you are getting `java.lang.NoClassDefFoundError` for `FirebaseMessagingService`,
+please configure Firebase Cloud Messaging Service in your project.
+
+Refer to this release note: [FCM Support](https://github.com/mixpanel/mixpanel-android/releases/tag/v5.5.0)
