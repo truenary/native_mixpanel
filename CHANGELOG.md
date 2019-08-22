@@ -20,3 +20,6 @@ Force converted arguments to [String:String] type for time being
 # 0.0.6
 - Added identify, alias, setPeopleProperties, registerProperties, reset and flush platform calls
 - iOS: Updated reading properties from method arguments
+
+# 0.0.7
+- Added instruction in Readme for Android Runtime Error
