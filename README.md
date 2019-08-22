@@ -2,6 +2,10 @@
 
 A new flutter plugin project to send Mixpanel events
 
+### iOS Specific
+
+If you wish to use our Swift 4.0 implementation, please point to the v0.0.7 release.
+
 ### Android Specific
 
 If you are getting `java.lang.NoClassDefFoundError` for `FirebaseMessagingService`,
