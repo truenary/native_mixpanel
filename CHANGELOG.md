@@ -23,3 +23,7 @@ Force converted arguments to [String:String] type for time being
 
 # 0.0.7
 - Added instruction in Readme for Android Runtime Error
+
+# 0.1.0
+- iOS: use SWIFT 4.2
+- Added instruction in Readme for iOS for SWIFT version used
