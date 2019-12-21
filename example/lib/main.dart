@@ -39,7 +39,7 @@ class _MyAppState extends State<MyApp> {
     String eventName = 'First App Open';
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
-      await widget.mixpanel.initialize('2500d0d99b3d441c731588f2ef57ef36');
+      await widget.mixpanel.initialize('your-token-here');
       await widget.mixpanel.track(eventName, {'Math': 'divide'});
       initStatus = 'Event Sent: $eventName';
     } on PlatformException {
@@ -81,6 +81,15 @@ class _MyAppState extends State<MyApp> {
                   await widget.mixpanel.identify('101');
                 },
                 child: Text('Set Identity'),
+              ),
+            ),
+            Container(
+              alignment: Alignment.center,
+              child: RaisedButton(
+                onPressed: () async {
+                  await widget.mixpanel.identify('102');
+                },
+                child: Text('Set People Identity'),
               ),
             ),
             Container(

@@ -33,7 +33,11 @@ class NativeMixpanelPlugin: MethodCallHandler {
     } else if(call.method == "identify") {
       mixpanel?.identify(call.arguments.toString())
       result.success("Identify success..")
-
+    } else if(call.method == "identifyPeople") {
+      val id = call.arguments.toString()
+      mixpanel?.identify(id)
+      mixpanel?.people?.identify(id)
+      result.success("Identify people success..")
     } else if(call.method == "alias") {
       mixpanel?.alias(call.arguments.toString(), mixpanel?.getDistinctId())
       result.success("Alias success..")
