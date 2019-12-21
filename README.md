@@ -12,3 +12,7 @@ If you are getting `java.lang.NoClassDefFoundError` for `FirebaseMessagingServic
 please configure Firebase Cloud Messaging Service in your project.
 
 Refer to this release note: [FCM Support](https://github.com/mixpanel/mixpanel-android/releases/tag/v5.5.0)
+
+### Note
+
+Call `identifyPeople` if you want to set people identity and `identify` if you only want to set id of Mixpanel instance

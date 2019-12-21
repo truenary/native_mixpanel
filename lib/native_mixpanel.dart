@@ -67,6 +67,10 @@ class Mixpanel extends _Mixpanel {
     return this._mp.track('identify', distinctId);
   }
 
+  Future identifyPeople(String distinctId) {
+    return this._mp.track('identifyPeople', distinctId);
+  }
+
   Future alias(String alias) {
     return this._mp.track('alias', alias);
   }
