@@ -27,3 +27,6 @@ Force converted arguments to [String:String] type for time being
 # 0.1.0
 - iOS: use SWIFT 4.2
 - Added instruction in Readme for iOS for SWIFT version used
+
+# 0.1.1
+- Added `identifyPeople` to set people identity
