@@ -50,6 +50,14 @@ class NativeMixpanelPlugin: MethodCallHandler {
         mixpanel?.people?.set(json)
         result.success("Set People Properties success..")
       }
+    } else if(call.method == "incrementPeopleProperties") {
+      if (call.arguments == null) {
+        result.error("Parse Error", "Arguments required for incrementPeopleProperties platform call", null)
+      } else {
+        val json = JSONObject(call.arguments.toString())
+        mixpanel?.people?.increment(json)
+        result.success("Increment People Properties success..")
+      }
     } else if(call.method == "registerSuperProperties") {
       if (call.arguments == null) {
         result.error("Parse Error", "Arguments required for registerSuperProperties platform call", null)

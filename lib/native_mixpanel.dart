@@ -76,7 +76,7 @@ class Mixpanel extends _Mixpanel {
     return this._mp.track('setPeopleProperties', jsonEncode(props));
   }
 
-  Future incrementPeopleProperties(Map<String, dynamic> props) {
+  Future incrementPeopleProperties(Map<String, int> props) {
     return this._mp.track('incrementPeopleProperties', jsonEncode(props));
   }
 
