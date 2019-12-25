@@ -115,7 +115,7 @@ class _MyAppState extends State<MyApp> {
               child: RaisedButton(
                 onPressed: () async {
                   await widget.mixpanel
-                      .incrementPeopleProperties({'purchase': 150});
+                      .incrementPeopleProperties({'purchase': 120, 'count': 6});
                 },
                 child: Text('Increment People Properties'),
               ),

@@ -26,6 +26,21 @@ import Mixpanel
     return nil;
   }
 
+  public func getIntPropertiesFromArguments(callArguments: Any?) throws -> Properties? {
+
+    if let arguments = callArguments, let data = (arguments as! String).data(using: .utf8) {
+
+      let properties = try JSONSerialization.jsonObject(with: data, options: []) as! [String:Int]
+      var argProperties = [String: Int]()
+      for (key, value) in properties {
+        argProperties[key] = value
+      }
+      return argProperties;
+    }
+
+    return nil;
+  }
+
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult)  {
     do {
       
@@ -44,7 +59,7 @@ import Mixpanel
           result(FlutterError(code: "Parse Error", message: "Could not parse arguments for setPeopleProperties platform call. Needs valid JSON data.", details: nil))
         }
       } else if(call.method == "incrementPeopleProperties") {
-        if let argProperties = try self.getPropertiesFromArguments(callArguments: call.arguments) {
+        if let argProperties = try self.getIntPropertiesFromArguments(callArguments: call.arguments) {
           Mixpanel.mainInstance().people.increment(properties: argProperties)
         } else {
           result(FlutterError(code: "Parse Error", message: "Could not parse arguments for incrementPeopleProperties platform call. Needs valid JSON data.", details: nil))
