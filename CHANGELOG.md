@@ -30,3 +30,6 @@ Force converted arguments to [String:String] type for time being
 
 # 0.1.1
 - Added `identifyPeople` to set people identity
+
+# 0.1.2
+- Added `incrementPeopleProperties` to increment people properties
