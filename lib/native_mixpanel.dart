@@ -5,12 +5,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart' show debugPrint;
 
 abstract class _Mixpanel {
-
   Future track(String eventName, [dynamic props]);
 }
 
 class _MixpanelOptedOut extends _Mixpanel {
-
   Future track(String eventName, [dynamic props]) {
     // nothing to do when opted out
     return Future.value();
@@ -26,7 +24,6 @@ class _MixpanelOptedIn extends _Mixpanel {
 }
 
 class _MixpanelDebugged extends _Mixpanel {
-
   final _Mixpanel child;
 
   _MixpanelDebugged({this.child});
@@ -38,11 +35,10 @@ class _MixpanelDebugged extends _Mixpanel {
     debugPrint(msg);
 
     return await this.child.track(eventName, props);
-  }  
+  }
 }
 
 class Mixpanel extends _Mixpanel {
-
   final bool shouldLogEvents;
   final bool isOptedOut;
 
@@ -52,11 +48,12 @@ class Mixpanel extends _Mixpanel {
     this.shouldLogEvents,
     this.isOptedOut,
   }) {
-
     _Mixpanel _mixpanel = isOptedOut ? _MixpanelOptedOut() : _MixpanelOptedIn();
 
-    if (shouldLogEvents) _mp = _MixpanelDebugged(child: _mixpanel);
-    else _mp = _mixpanel;
+    if (shouldLogEvents)
+      _mp = _MixpanelDebugged(child: _mixpanel);
+    else
+      _mp = _mixpanel;
   }
 
   Future initialize(String token) {
@@ -77,6 +74,10 @@ class Mixpanel extends _Mixpanel {
 
   Future setPeopleProperties(Map<String, dynamic> props) {
     return this._mp.track('setPeopleProperties', jsonEncode(props));
+  }
+
+  Future incrementPeopleProperties(Map<String, double> props) {
+    return this._mp.track('incrementPeopleProperties', jsonEncode(props));
   }
 
   Future registerSuperProperties(Map<String, dynamic> props) {

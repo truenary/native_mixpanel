@@ -114,6 +114,15 @@ class _MyAppState extends State<MyApp> {
               alignment: Alignment.center,
               child: RaisedButton(
                 onPressed: () async {
+                  await widget.mixpanel.incrementPeopleProperties({'purchase': 12.65, 'count': 6});
+                },
+                child: Text('Increment People Properties'),
+              ),
+            ),
+            Container(
+              alignment: Alignment.center,
+              child: RaisedButton(
+                onPressed: () async {
                   await widget.mixpanel.registerSuperProperties({'gender': 'he'});
                 },
                 child: Text('Register Super Properties'),

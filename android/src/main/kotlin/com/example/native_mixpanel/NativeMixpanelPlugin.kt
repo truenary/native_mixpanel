@@ -14,6 +14,16 @@ class NativeMixpanelPlugin: MethodCallHandler {
 
   private var mixpanel: MixpanelAPI? = null
 
+  private fun jsonToNumberMap(jsonObj: JSONObject): Map<String, Double> {
+    var map = HashMap<String, Double>();
+    var keys: Iterator<String> = jsonObj.keys();
+    while (keys.hasNext()) {
+      var key = keys.next();
+      map.put(key, jsonObj.getDouble(key));
+    }
+    return map;
+  }
+
   companion object {
 
     var ctxt: Context? = null
@@ -49,6 +59,14 @@ class NativeMixpanelPlugin: MethodCallHandler {
         val json = JSONObject(call.arguments.toString())
         mixpanel?.people?.set(json)
         result.success("Set People Properties success..")
+      }
+    } else if(call.method == "incrementPeopleProperties") {
+      if (call.arguments == null) {
+        result.error("Parse Error", "Arguments required for incrementPeopleProperties platform call", null)
+      } else {
+        val map = jsonToNumberMap(JSONObject(call.arguments.toString()))
+        mixpanel?.people?.increment(map)
+        result.success("Increment People Properties success..")
       }
     } else if(call.method == "registerSuperProperties") {
       if (call.arguments == null) {
