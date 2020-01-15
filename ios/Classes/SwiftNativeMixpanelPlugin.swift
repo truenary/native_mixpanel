@@ -66,6 +66,12 @@ import Mixpanel
         } else {
           result(FlutterError(code: "Parse Error", message: "Could not parse arguments for registerSuperProperties platform call. Needs valid JSON data.", details: nil))
         }
+      } else if(call.method == "registerSuperPropertiesOnce") {
+        if let argProperties = try self.getPropertiesFromArguments(callArguments: call.arguments) {
+          Mixpanel.mainInstance().registerSuperPropertiesOnce(argProperties)
+        } else {
+          result(FlutterError(code: "Parse Error", message: "Could not parse arguments for registerSuperPropertiesOnce platform call. Needs valid JSON data.", details: nil))
+        }
       } else if(call.method == "reset") {
         Mixpanel.mainInstance().reset()
       } else if(call.method == "flush") {

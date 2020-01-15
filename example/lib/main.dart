@@ -132,6 +132,15 @@ class _MyAppState extends State<MyApp> {
               alignment: Alignment.center,
               child: RaisedButton(
                 onPressed: () async {
+                  await widget.mixpanel.registerSuperPropertiesOnce({'height': '6 foot'});
+                },
+                child: Text('Register Super Properties Once'),
+              ),
+            ),
+            Container(
+              alignment: Alignment.center,
+              child: RaisedButton(
+                onPressed: () async {
                   await widget.mixpanel.track('TICK', {'createdAt': DateTime.now().toIso8601String()});
                 },
                 child: Text('Send Tick Event'),

@@ -84,6 +84,10 @@ class Mixpanel extends _Mixpanel {
     return this._mp.track('registerSuperProperties', jsonEncode(props));
   }
 
+  Future registerSuperPropertiesOnce(Map<String, dynamic> props) {
+    return this._mp.track('registerSuperPropertiesOnce', jsonEncode(props));
+  }
+
   Future reset() {
     return this._mp.track('reset');
   }

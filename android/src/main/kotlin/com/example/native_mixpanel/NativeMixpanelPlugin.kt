@@ -76,6 +76,14 @@ class NativeMixpanelPlugin: MethodCallHandler {
         mixpanel?.registerSuperProperties(json)
         result.success("Register Properties success..")
       }
+    } else if(call.method == "registerSuperPropertiesOnce") {
+      if (call.arguments == null) {
+        result.error("Parse Error", "Arguments required for registerSuperPropertiesOnce platform call", null)
+      } else {
+        val json = JSONObject(call.arguments.toString())
+        mixpanel?.registerSuperPropertiesOnce(json)
+        result.success("Register Properties Once success..")
+      }
     } else if (call.method == "reset") {
       mixpanel?.reset()
       result.success("Reset success..")
