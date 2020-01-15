@@ -87,7 +87,7 @@ class _MyAppState extends State<MyApp> {
               alignment: Alignment.center,
               child: RaisedButton(
                 onPressed: () async {
-                  await widget.mixpanel.identify('102');
+                  await widget.mixpanel.identifyPeople('102');
                 },
                 child: Text('Set People Identity'),
               ),
