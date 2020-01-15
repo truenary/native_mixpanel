@@ -51,13 +51,20 @@ class NativeMixpanelPlugin: MethodCallHandler {
     } else if(call.method == "alias") {
       mixpanel?.alias(call.arguments.toString(), mixpanel?.getDistinctId())
       result.success("Alias success..")
-
     } else if(call.method == "setPeopleProperties") {
       if (call.arguments == null) {
         result.error("Parse Error", "Arguments required for setPeopleProperties platform call", null)
       } else {
         val json = JSONObject(call.arguments.toString())
         mixpanel?.people?.set(json)
+        result.success("Set People Properties success..")
+      }
+    } else if(call.method == "setPeoplePropertiesOnce") {
+      if (call.arguments == null) {
+        result.error("Parse Error", "Arguments required for setPeoplePropertiesOnce platform call", null)
+      } else {
+        val json = JSONObject(call.arguments.toString())
+        mixpanel?.people?.setOnce(json)
         result.success("Set People Properties success..")
       }
     } else if(call.method == "incrementPeopleProperties") {

@@ -54,6 +54,12 @@ import Mixpanel
         } else {
           result(FlutterError(code: "Parse Error", message: "Could not parse arguments for setPeopleProperties platform call. Needs valid JSON data.", details: nil))
         }
+      } else if(call.method == "setPeoplePropertiesOnce") {
+        if let argProperties = try self.getPropertiesFromArguments(callArguments: call.arguments) {
+          Mixpanel.mainInstance().people.setOnce(properties: argProperties)
+        } else {
+          result(FlutterError(code: "Parse Error", message: "Could not parse arguments for setPeoplePropertiesOnce platform call. Needs valid JSON data.", details: nil))
+        }
       } else if(call.method == "incrementPeopleProperties") {
         if let argProperties = try self.getDoublePropertiesFromArguments(callArguments: call.arguments) {
           Mixpanel.mainInstance().people.increment(properties: argProperties)

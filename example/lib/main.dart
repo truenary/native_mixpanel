@@ -5,11 +5,11 @@ import 'package:flutter/services.dart';
 import 'package:native_mixpanel/native_mixpanel.dart';
 
 void main() => runApp(MyApp(
-  mixpanel: Mixpanel(
-    shouldLogEvents: true,
-    isOptedOut: false,
-  ),
-));
+      mixpanel: Mixpanel(
+        shouldLogEvents: true,
+        isOptedOut: false,
+      ),
+    ));
 
 class MyApp extends StatefulWidget {
   final Mixpanel mixpanel;
@@ -114,7 +114,18 @@ class _MyAppState extends State<MyApp> {
               alignment: Alignment.center,
               child: RaisedButton(
                 onPressed: () async {
-                  await widget.mixpanel.incrementPeopleProperties({'purchase': 12.65, 'count': 6});
+                  await widget.mixpanel
+                      .setPeoplePropertiesOnce({'genre': 'rap'});
+                },
+                child: Text('Set People Properties Once'),
+              ),
+            ),
+            Container(
+              alignment: Alignment.center,
+              child: RaisedButton(
+                onPressed: () async {
+                  await widget.mixpanel.incrementPeopleProperties(
+                      {'purchase': 12.65, 'count': 6});
                 },
                 child: Text('Increment People Properties'),
               ),
@@ -123,7 +134,8 @@ class _MyAppState extends State<MyApp> {
               alignment: Alignment.center,
               child: RaisedButton(
                 onPressed: () async {
-                  await widget.mixpanel.registerSuperProperties({'gender': 'he'});
+                  await widget.mixpanel
+                      .registerSuperProperties({'gender': 'he'});
                 },
                 child: Text('Register Super Properties'),
               ),
@@ -132,7 +144,8 @@ class _MyAppState extends State<MyApp> {
               alignment: Alignment.center,
               child: RaisedButton(
                 onPressed: () async {
-                  await widget.mixpanel.registerSuperPropertiesOnce({'height': '6 foot'});
+                  await widget.mixpanel
+                      .registerSuperPropertiesOnce({'height': '6 foot'});
                 },
                 child: Text('Register Super Properties Once'),
               ),
@@ -141,7 +154,8 @@ class _MyAppState extends State<MyApp> {
               alignment: Alignment.center,
               child: RaisedButton(
                 onPressed: () async {
-                  await widget.mixpanel.track('TICK', {'createdAt': DateTime.now().toIso8601String()});
+                  await widget.mixpanel.track(
+                      'TICK', {'createdAt': DateTime.now().toIso8601String()});
                 },
                 child: Text('Send Tick Event'),
               ),
@@ -168,7 +182,8 @@ class _MyAppState extends State<MyApp> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            widget.mixpanel.track('Added to Cart', {'ProductId': 'product-${count++}'});
+            widget.mixpanel
+                .track('Added to Cart', {'ProductId': 'product-${count++}'});
           },
           child: Icon(Icons.plus_one),
         ),
