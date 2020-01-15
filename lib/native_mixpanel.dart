@@ -101,6 +101,8 @@ class Mixpanel extends _Mixpanel {
   }
 
   Future track(String eventName, [dynamic props]) {
-    return this._mp.track(eventName, jsonEncode(props));
+    var _props = props;
+    if (props == null) _props = {};
+    return this._mp.track(eventName, jsonEncode(_props));
   }
 }
