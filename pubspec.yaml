@@ -1,6 +1,6 @@
 name: native_mixpanel
 description: Plugin for Mixpanel
-version: 0.1.4
+version: 1.0.4
 author: Suren Yonjan <surendrayonjan@gmail.com>
 homepage: https://github.com/truenary/native_mixpanel
 
