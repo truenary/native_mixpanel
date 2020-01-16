@@ -11,35 +11,47 @@ import Mixpanel
     registrar.addMethodCallDelegate(instance, channel: channel)
   }
 
-  public func getPropertiesFromArguments(callArguments: Any?) throws -> Properties? {
-
-    if let arguments = callArguments, let data = (arguments as! String).data(using: .utf8) {
-
-      let properties = try JSONSerialization.jsonObject(with: data, options: []) as! [String:Any]
-      var argProperties = [String: String]()
-      for (key, value) in properties {
-        argProperties[key] = String(describing: value)
+  private func toMPType(_ value: Any) -> MixpanelType? {
+    if let isLikedNumber = value as? NSNumber, isLikedNumber === kCFBooleanTrue || isLikedNumber === kCFBooleanFalse {
+      return value as! Bool
+    } else if(value is String) {
+      return value as! String
+    } else if(value is Int) {
+      return value as! Int
+    } else if(value is Double) {
+      return value as! Double
+    } else if(value is NSArray) {
+      var typedArr = [MixpanelType]();
+      for arrValue in (value as! NSArray) {
+        if let typedValue = toMPType(arrValue) {
+          typedArr.append(typedValue)
+        }
       }
-      return argProperties;
+      return typedArr;
     }
-
     return nil;
   }
 
-  public func getDoublePropertiesFromArguments(callArguments: Any?) throws -> Properties? {
-
-    if let arguments = callArguments, let data = (arguments as! String).data(using: .utf8) {
-
-      let properties = try JSONSerialization.jsonObject(with: data, options: []) as! [String:Double]
-      return properties;
+  private func convertTypes(properties: [String: Any]) -> [String: MixpanelType] {
+    var argProperties = [String: MixpanelType]()
+    for(key, value) in properties {
+      if let typedValue = toMPType(value) {
+        argProperties[key] = typedValue
+      }
     }
+    return argProperties;
+  }
 
+  private func getPropertiesFromArguments(callArguments: Any?) throws -> Properties? {
+    if let arguments = callArguments, let data = (arguments as! String).data(using: .utf8) {
+      let properties = try JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
+      return convertTypes(properties: properties);
+    }
     return nil;
   }
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult)  {
     do {
-      
       if (call.method == "initialize") {
         Mixpanel.initialize(token: call.arguments as! String)
       } else if(call.method == "identify") {
@@ -61,7 +73,7 @@ import Mixpanel
           result(FlutterError(code: "Parse Error", message: "Could not parse arguments for setPeoplePropertiesOnce platform call. Needs valid JSON data.", details: nil))
         }
       } else if(call.method == "incrementPeopleProperties") {
-        if let argProperties = try self.getDoublePropertiesFromArguments(callArguments: call.arguments) {
+        if let argProperties = try self.getPropertiesFromArguments(callArguments: call.arguments) {
           Mixpanel.mainInstance().people.increment(properties: argProperties)
         } else {
           result(FlutterError(code: "Parse Error", message: "Could not parse arguments for incrementPeopleProperties platform call. Needs valid JSON data.", details: nil))
@@ -87,7 +99,6 @@ import Mixpanel
       } else {
         Mixpanel.mainInstance().track(event: call.method)
       }
-
       result(true)
     } catch {
       print(error.localizedDescription)
