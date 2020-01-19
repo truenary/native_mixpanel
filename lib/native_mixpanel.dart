@@ -68,6 +68,10 @@ class Mixpanel extends _Mixpanel {
     return this._mp.track('identifyPeople', distinctId);
   }
 
+  Future addPushDeviceToken(String token) {
+    return this._mp.track('addPushDeviceToken', token);
+  }
+
   Future alias(String alias) {
     return this._mp.track('alias', alias);
   }

@@ -48,6 +48,10 @@ class NativeMixpanelPlugin: MethodCallHandler {
       mixpanel?.identify(id)
       mixpanel?.people?.identify(id)
       result.success("Identify people success..")
+    } else if(call.method == "addPushDeviceToken") {
+      val token = call.arguments.toString()
+      mixpanel?.people?.setPushRegistrationId(token)
+      result.success("addPushDeviceToken success..")
     } else if(call.method == "alias") {
       mixpanel?.alias(call.arguments.toString(), mixpanel?.getDistinctId())
       result.success("Alias success..")

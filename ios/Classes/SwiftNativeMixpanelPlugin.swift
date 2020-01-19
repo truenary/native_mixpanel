@@ -46,6 +46,8 @@ import Mixpanel
         Mixpanel.mainInstance().identify(distinctId: call.arguments as! String, usePeople: false)
       } else if (call.method == "identifyPeople") {
         Mixpanel.mainInstance().identify(distinctId: call.arguments as! String, usePeople: true)
+      } else if (call.method == "addPushDeviceToken") {
+        Mixpanel.mainInstance().people.addPushDeviceToken(call.arguments as! String)
       } else if(call.method == "alias") {
         Mixpanel.mainInstance().createAlias(call.arguments as! String, distinctId: Mixpanel.mainInstance().distinctId)
       } else if(call.method == "setPeopleProperties") {
