@@ -58,8 +58,6 @@ import Mixpanel
         Mixpanel.mainInstance().identify(distinctId: call.arguments as! String, usePeople: false)
       } else if (call.method == "identifyPeople") {
         Mixpanel.mainInstance().identify(distinctId: call.arguments as! String, usePeople: true)
-      } else if (call.method == "addPushDeviceToken") {
-        Mixpanel.mainInstance().people.addPushDeviceToken(call.arguments as! String)
       } else if(call.method == "alias") {
         Mixpanel.mainInstance().createAlias(call.arguments as! String, distinctId: Mixpanel.mainInstance().distinctId)
       } else if(call.method == "setPeopleProperties") {
@@ -106,5 +104,9 @@ import Mixpanel
       print(error.localizedDescription)
       result(false)
     }
+  }
+
+  public func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+    Mixpanel.mainInstance().people.addPushDeviceToken(deviceToken)
   }
 }

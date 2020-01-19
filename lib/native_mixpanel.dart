@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart' show debugPrint;
@@ -68,8 +69,10 @@ class Mixpanel extends _Mixpanel {
     return this._mp.track('identifyPeople', distinctId);
   }
 
-  Future addPushDeviceToken(String token) {
-    return this._mp.track('addPushDeviceToken', token);
+  Future setPushRegistrationId(String token) async {
+    if (Platform.isAndroid) {
+      await this._mp.track('setPushRegistrationId', token);
+    }
   }
 
   Future alias(String alias) {
