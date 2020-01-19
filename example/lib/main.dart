@@ -154,10 +154,24 @@ class _MyAppState extends State<MyApp> {
               alignment: Alignment.center,
               child: RaisedButton(
                 onPressed: () async {
-                  await widget.mixpanel.track(
-                      'TICK', {'createdAt': DateTime.now().toIso8601String()});
+                  await widget.mixpanel.track('Test Event', {
+                    'integer test': 23,
+                    'double test': 42.69,
+                    'boolean test': true,
+                    'string test': 'string here',
+                    'list integer test': [1, 2],
+                    'list double test': [1.11, 2.22],
+                    'list boolean test': [true, false],
+                    'list string test': ['first', 'second'],
+                    'list of lists test': [
+                      'string here',
+                      [1, 2, 3],
+                      [true, false, false],
+                      69.9,
+                    ],
+                  });
                 },
-                child: Text('Send Tick Event'),
+                child: Text('Send Test Event'),
               ),
             ),
             Container(
