@@ -54,6 +54,13 @@ import Mixpanel
     do {
       if (call.method == "initialize") {
         Mixpanel.initialize(token: call.arguments as! String)
+      } else if(call.method == "setupTerminate") {
+        let eventName = call.arguments as! String
+        NotificationCenter.default.addObserver(forName: UIApplication.willTerminateNotification, object: nil, queue: nil, using: { _ in
+          Mixpanel.mainInstance().track(event: eventName)
+          Mixpanel.mainInstance().flush()
+          sleep(5)
+        })
       } else if(call.method == "identify") {
         Mixpanel.mainInstance().identify(distinctId: call.arguments as! String, usePeople: false)
       } else if (call.method == "identifyPeople") {

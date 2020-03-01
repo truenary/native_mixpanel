@@ -8,6 +8,7 @@ void main() => runApp(MyApp(
       mixpanel: Mixpanel(
         shouldLogEvents: true,
         isOptedOut: false,
+        terminatedEvent: 'App force quit',
       ),
     ));
 

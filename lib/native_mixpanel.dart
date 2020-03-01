@@ -42,12 +42,14 @@ class _MixpanelDebugged extends _Mixpanel {
 class Mixpanel extends _Mixpanel {
   final bool shouldLogEvents;
   final bool isOptedOut;
+  final String terminatedEvent;
 
   _Mixpanel _mp;
 
   Mixpanel({
     this.shouldLogEvents,
     this.isOptedOut,
+    this.terminatedEvent,
   }) {
     _Mixpanel _mixpanel = isOptedOut ? _MixpanelOptedOut() : _MixpanelOptedIn();
 
@@ -57,8 +59,11 @@ class Mixpanel extends _Mixpanel {
       _mp = _mixpanel;
   }
 
-  Future initialize(String token) {
-    return this._mp.track('initialize', token);
+  Future initialize(String token) async {
+    await this._mp.track('initialize', token);
+    if (terminatedEvent != null) {
+      await this._mp.track('setupTerminate', terminatedEvent);
+    }
   }
 
   Future identify(String distinctId) {
