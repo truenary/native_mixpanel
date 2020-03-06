@@ -62,7 +62,8 @@ class Mixpanel extends _Mixpanel {
   Future initialize(String token) async {
     await this._mp.track('initialize', token);
     if (terminatedEvent != null) {
-      await this._mp.track('setupTerminate', terminatedEvent);
+      if (Platform.isIOS)
+        await this._mp.track('setupTerminate', terminatedEvent);
     }
   }
 
