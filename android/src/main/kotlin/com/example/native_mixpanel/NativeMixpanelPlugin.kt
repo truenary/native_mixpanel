@@ -79,7 +79,16 @@ class NativeMixpanelPlugin: MethodCallHandler {
     } else if (call.method == "reset") {
       mixpanel?.reset()
       result.success("Reset success..")
-    } else if (call.method == "flush") {
+    }
+    else if (call.method == "timeEvent") {
+      mixpanel?.timeEvent(call.arguments.toString())
+      result.success("Time event success..")
+    }
+    else if (call.method == "eventElapsedTime") {
+      val elapsedTime = mixpanel?.eventElapsedTime(call.arguments.toString())
+      result.success(elapsedTime)
+    }
+    else if (call.method == "flush") {
       mixpanel?.flush()
       result.success("Flush success..")
     } else {
