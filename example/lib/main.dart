@@ -25,6 +25,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   String _statusMessage = 'Trying to send track event';
   int count;
+  String timeEventName = 'TimeEvent';
 
   @override
   void initState() {
@@ -42,6 +43,7 @@ class _MyAppState extends State<MyApp> {
       await widget.mixpanel.initialize('your-token-here');
       await widget.mixpanel.track(eventName, {'Math': 'divide'});
       initStatus = 'Event Sent: $eventName';
+      await widget.mixpanel.timeEvent(timeEventName);
     } on PlatformException {
       initStatus = 'Failed to send event: $eventName';
     }
@@ -92,6 +94,18 @@ class _MyAppState extends State<MyApp> {
                 child: Text('Set People Identity'),
               ),
             ),
+            Container(
+              alignment: Alignment.center,
+              child: RaisedButton(
+                onPressed: () async {
+                  await widget.mixpanel.track(timeEventName);
+                  var timeElapsed = await widget.mixpanel.eventElapsedTime(timeEventName);
+                  debugPrint("time --> $timeElapsed");
+                },
+                child: Text('Track Duration of Event'),
+              ),
+            ),
+
             Container(
               alignment: Alignment.center,
               child: RaisedButton(
