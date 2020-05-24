@@ -72,11 +72,6 @@ import Mixpanel
       else if(call.method == "timeEvent") {
         Mixpanel.mainInstance().time(event: call.arguments as! String)
       }
-      else if(call.method == "eventElapsedTime") {
-       let elapsedTime = Mixpanel.mainInstance().eventElapsedTime(event: call.arguments as! String)
-        result(elapsedTime)
-        return
-      }
       else if(call.method == "flush") {
         Mixpanel.mainInstance().flush()
       } else if let argProperties = try self.getPropertiesFromArguments(callArguments: call.arguments) {

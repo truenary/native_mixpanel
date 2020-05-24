@@ -98,9 +98,7 @@ class _MyAppState extends State<MyApp> {
               alignment: Alignment.center,
               child: RaisedButton(
                 onPressed: () async {
-                  await widget.mixpanel.track(timeEventName);
-                  var timeElapsed = await widget.mixpanel.eventElapsedTime(timeEventName);
-                  debugPrint("time --> $timeElapsed");
+                  await widget.mixpanel.track(timeEventName, {});
                 },
                 child: Text('Track Duration of Event'),
               ),
