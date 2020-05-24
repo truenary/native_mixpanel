@@ -2,6 +2,7 @@ package com.example.native_mixpanel
 
 import android.content.Context
 import android.util.Log
+import android.util.Log.println
 import org.json.JSONObject
 import com.mixpanel.android.mpmetrics.MixpanelAPI
 import io.flutter.plugin.common.MethodCall
@@ -79,7 +80,12 @@ class NativeMixpanelPlugin: MethodCallHandler {
     } else if (call.method == "reset") {
       mixpanel?.reset()
       result.success("Reset success..")
-    } else if (call.method == "flush") {
+    }
+    else if (call.method == "timeEvent") {
+      mixpanel?.timeEvent(call.arguments.toString())
+      result.success("Time event success..")
+    }
+    else if (call.method == "flush") {
       mixpanel?.flush()
       result.success("Flush success..")
     } else {

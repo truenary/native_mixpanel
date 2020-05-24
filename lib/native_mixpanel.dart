@@ -72,6 +72,10 @@ class Mixpanel extends _Mixpanel {
     return this._mp.track('alias', alias);
   }
 
+  Future<void> timeEvent(String eventName) {
+    return this._mp.track('timeEvent', eventName);
+  }
+
   Future setPeopleProperties(Map<String, dynamic> props) {
     return this._mp.track('setPeopleProperties', jsonEncode(props));
   }
