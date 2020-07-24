@@ -1,6 +1,8 @@
 package com.example.native_mixpanel
 
 import android.content.Context
+import androidx.annotation.NonNull
+import io.flutter.embedding.engine.plugins.FlutterPlugin
 import android.util.Log
 import org.json.JSONObject
 import com.mixpanel.android.mpmetrics.MixpanelAPI
@@ -10,7 +12,7 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.common.PluginRegistry.Registrar
 
-class NativeMixpanelPlugin: MethodCallHandler {
+class NativeMixpanelPlugin (context: Context): FlutterPlugin, MethodCallHandler {
 
   private var mixpanel: MixpanelAPI? = null
 
@@ -24,20 +26,22 @@ class NativeMixpanelPlugin: MethodCallHandler {
     return map;
   }
 
-  companion object {
+  override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
+    val channel = MethodChannel(flutterPluginBinding.binaryMessenger, "native_mixpanel")
+    channel.setMethodCallHandler(NativeMixpanelPlugin(flutterPluginBinding.applicationContext))
+  }
 
-    var ctxt: Context? = null
+  companion object {
     @JvmStatic
     fun registerWith(registrar: Registrar) {
-      ctxt = registrar.context()
       val channel = MethodChannel(registrar.messenger(), "native_mixpanel")
-      channel.setMethodCallHandler(NativeMixpanelPlugin())
+      channel.setMethodCallHandler(NativeMixpanelPlugin(registrar.context().applicationContext))
     }
   }
 
   override fun onMethodCall(call: MethodCall, result: Result) {
     if (call.method == "initialize") {
-      mixpanel = MixpanelAPI.getInstance(ctxt, call.arguments.toString())
+      mixpanel = MixpanelAPI.getInstance(context, call.arguments.toString())
       result.success("Init success..")
 
     } else if(call.method == "identify") {
@@ -110,5 +114,8 @@ class NativeMixpanelPlugin: MethodCallHandler {
       }      
       result.success("Track success..")
     }
+  }
+
+  override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
   }
 }
