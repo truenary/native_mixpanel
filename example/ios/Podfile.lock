@@ -1,19 +1,19 @@
 PODS:
   - Flutter (1.0.0)
-  - Mixpanel-swift (2.6.9):
-    - Mixpanel-swift/Complete (= 2.6.9)
-  - Mixpanel-swift/Complete (2.6.9)
-  - native_mixpanel (0.0.1):
+  - Mixpanel (2.7.8):
+    - Mixpanel/Complete (= 2.7.8)
+  - Mixpanel/Complete (2.7.8)
+  - native_mixpanel (1.0.12):
     - Flutter
-    - Mixpanel-swift (= 2.6.9)
+    - Mixpanel (= 2.7.8)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - native_mixpanel (from `.symlinks/plugins/native_mixpanel/ios`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
-    - Mixpanel-swift
+  "git@github.com:PocketPoints/IOS-pod-specs.git":
+    - Mixpanel
 
 EXTERNAL SOURCES:
   Flutter:
@@ -23,9 +23,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  Mixpanel-swift: c56020d4998f8389e246e2eede93d08ce4ed8c86
-  native_mixpanel: 8fc59f21d1b6029213bc40bd6b908c87fb70f2aa
+  Mixpanel: cb0d7ba6d8b539cb92d8522ac2ffc2c590c28b15
+  native_mixpanel: 5b8fc6213a92bc9866c1ffb1ac1c7a7c8dce80c3
 
-PODFILE CHECKSUM: 1b66dae606f75376c5f2135a8290850eeb09ae83
+PODFILE CHECKSUM: 78ae648f41b29d7bb6a012860346f9b0c8043243
 
-COCOAPODS: 1.7.5
+COCOAPODS: 1.9.3

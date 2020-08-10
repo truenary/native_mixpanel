@@ -3,7 +3,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'native_mixpanel'
-  s.version          = '1.0.9'
+  s.version          = '1.0.12'
   s.summary          = 'A new flutter plugin project.'
   s.description      = <<-DESC
 A new flutter plugin project.
@@ -15,8 +15,9 @@ A new flutter plugin project.
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
-  s.dependency 'Mixpanel-swift', '2.6.9'
+  s.dependency 'Mixpanel', '2.7.8'
 
   s.ios.deployment_target = '8.0'
+  s.swift_version = '5.0'
 end
 
