@@ -12,8 +12,8 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.common.PluginRegistry.Registrar
 
-class NativeMixpanelPlugin (context: Context): FlutterPlugin, MethodCallHandler {
-
+class NativeMixpanelPlugin (): FlutterPlugin, MethodCallHandler {
+  lateinit var _context: Context
   private var mixpanel: MixpanelAPI? = null
 
   private fun jsonToNumberMap(jsonObj: JSONObject): Map<String, Double> {
@@ -28,14 +28,18 @@ class NativeMixpanelPlugin (context: Context): FlutterPlugin, MethodCallHandler 
 
   override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
     val channel = MethodChannel(flutterPluginBinding.binaryMessenger, "native_mixpanel")
-    channel.setMethodCallHandler(NativeMixpanelPlugin(flutterPluginBinding.applicationContext))
+    val plugin = NativeMixpanelPlugin()
+    plugin._context = flutterPluginBinding.applicationContext
+    channel.setMethodCallHandler(plugin)
   }
 
   companion object {
     @JvmStatic
     fun registerWith(registrar: Registrar) {
       val channel = MethodChannel(registrar.messenger(), "native_mixpanel")
-      channel.setMethodCallHandler(NativeMixpanelPlugin(registrar.context().applicationContext))
+      val plugin = NativeMixpanelPlugin()
+      plugin._context = registrar.context().applicationContext
+      channel.setMethodCallHandler(plugin)
     }
   }
 
